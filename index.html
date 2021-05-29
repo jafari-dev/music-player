@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Ahmad Jafari">
+    <meta name="description" content="Simple offline music player with HTML, CSS and Vanilla JavaScript">
+    <title>Music Player</title>
+    <link rel="icon" href="./favicon.png">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <section id='player'>
+        <!-- Information -->
+        <div id="cover-container">
+            <img alt="Music's cover image" id="cover">
+        </div>
+        <h2 id="title"></h2>
+        <h3 id="artist"></h3>
+        <img id="like"></img>
+        <audio id="audio"></audio>
+        <!-- Time Stream -->
+        <div class="time-wrapper">
+            <div class="duration-wrapper">
+                <span id="current-time"></span>
+                <span id="duration"></span>
+            </div>
+            <div id="progress-container">
+                <div id="progress"></div>
+            </div>
+        </div>
+        <!-- Controllers -->
+        <div class="controllers">
+            <div class="controller">
+                <img src="./images/shuffle.svg" id="shuffle">
+            </div>
+            <div class="controller">
+                <img src="./images/next.svg" id="previous" title="Previous">
+            </div>
+            <div class="controller">
+                <img src="./images/play.svg" id="play">
+            </div>
+            <div class="controller">
+                <img src="./images/next.svg"  id="next" title="Next">
+            </div>
+            <div class="controller">
+                <img src="./images/repeat.svg" id="repeat">
+                <span id="repeat-once">1</span>
+            </div>
+        </div>
+    </section>
+    <div id="dialog">
+        <img alt="Music's cover image" id="big-cover">
+    </div>
+    <script src="./script.js"></script>
+</body>
+</html>

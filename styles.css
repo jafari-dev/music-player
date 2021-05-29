@@ -1,0 +1,214 @@
+@font-face {
+    font-family: Spartan;
+    src: url('./fonts/spartan-regular.ttf') format('truetype');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: Spartan;
+    src: url('./fonts/spartan-bold.ttf') format('truetype');
+    font-weight: bold;
+}
+
+body {
+    margin: 0px;
+    background-color: rgb(0, 104, 104);
+    background: linear-gradient(to right, #467063, #403653);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Spartan;
+    user-select: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: unset;
+    font-size: unset;
+}
+
+#player {
+    background-color: rgb(192, 192, 192);
+    border-radius: 32px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 15px 30px #000000;
+    position: relative;
+    width: 300px;
+}
+
+#cover-container {
+    border-radius: 20px;
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 280px;
+    height: 280px;
+}
+
+#cover {
+    border-radius: 20px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    box-shadow: 0px 10px 20px #000000;
+    cursor: zoom-in;
+}
+
+#title {
+    margin: 260px auto 0px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#artist {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+#like {
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    filter: drop-shadow(0px 4px 1px black);
+}
+
+#like:active {
+    filter: drop-shadow(0px 1px 1px black);
+    transform: translateY(2px);
+}
+
+.time-wrapper {
+    border-radius: 10px;
+    margin: 0px auto 10px;
+    width: 280PX;
+}
+
+#progress-container {
+    background-color: #ffffff;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 10px auto;
+    width: 100%;
+    height: 16px;
+    position: relative;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 6px 2px #000000;;
+}
+
+#current-time {
+    cursor: pointer;
+}
+
+@keyframes progress-animation {
+    0% { background-color: rgba(77, 15, 102, 0.8); }
+    20% { background-color: rgba(102, 93, 15, 0.8); }
+    40% { background-color: rgba(15, 60, 102, 0.8); }
+    60% { background-color: rgba(102, 15, 15, 0.8); }
+    80% { background-color: rgba(15, 102, 19, 0.8); }
+    100% { background-color: rgba(77, 15, 102, 0.8); }
+}
+
+#progress {
+    border-radius: 4px;
+    cursor: pointer;
+    width: 0%;
+    height: 100%;
+    animation-name: progress-animation;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+}
+
+.duration-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+
+.controllers {
+    margin: 10px auto;
+    height: 40px;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.controller {
+    display: block;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    margin: 0px 12px;
+    border-radius: 50%;
+    filter: invert(48%) sepia(5%) saturate(11%) hue-rotate(343deg) brightness(93%) contrast(85%);
+}
+
+.controller > img {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.controller:not(:first-of-type):not(:last-of-type) {
+    filter: invert(23%) sepia(20%) saturate(0%) hue-rotate(289deg) brightness(106%) contrast(97%);
+}
+
+.controller:nth-of-type(3) {
+    width: 40px;
+    height: 40px;
+}
+
+#repeat-once {
+    font-family: Spartan;
+    font-size: 12px;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    display: none;
+    color: #2e2e2e;
+}
+
+#previous {
+    transform: rotate(180deg);
+}
+
+#dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.75);
+    z-index: 1;
+    margin: 0;
+    padding: 0;
+    cursor: zoom-out;
+}
+
+#big-cover {
+    width: 500px;
+    height: 500px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid #ffffff;
+    border-radius: 8px;
+    display: block;
+}
+
+@media screen and (max-width: 540px) {
+    #big-cover {
+        width: 90%;
+        height: auto;
+    }
+}
