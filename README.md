@@ -6,7 +6,7 @@ This player is developed using HTML, CSS and pure JavaScript (Vanilla JS). I tri
 <strong>[Click here to watch the online demo](https://player.jafari.dev)</strong>
 
 <p>
-  <img src="https://user-images.githubusercontent.com/37804060/120243510-08d7e800-c27d-11eb-89c0-73a3048c59b4.png"/>
+  <img src="https://user-images.githubusercontent.com/37804060/130139549-729da179-29d6-44d7-ab26-c5a7746aa187.png"/>
 </p>
 
 ## Features

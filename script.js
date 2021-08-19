@@ -10,6 +10,7 @@ const like = document.getElementById("like");
 // Time and Progress Elements
 const currentTimeElement = document.getElementById("current-time");
 const durationElement = document.getElementById("duration");
+const visualizerContainerElement = document.getElementById("visualizer-container");
 const progressElement = document.getElementById("progress");
 const visualizerElements = document.getElementsByTagName("ellipse");
 
@@ -89,7 +90,7 @@ let isTimeModeReverse = false;
 let lastProgressPercentage = 0;
 
 
-function loadMusic() {
+async function loadMusic() {
     const currentMusicData = shuffleState ? musicsData[shuffleIndexes[currentIndex]] : musicsData[currentIndex];
     
     if (currentMusicData.isLiked) {
@@ -105,7 +106,10 @@ function loadMusic() {
     audio.setAttribute("src", currentMusicData.audioSource);
     cover.setAttribute("src", currentMusicData.coverSource);
     bigCover.setAttribute("src", currentMusicData.coverSource);
-    
+    visualizerContainerElement.innerHTML = "";
+    const wave = await getAudioWave(currentMusicData.audioSource);
+    visualizerContainerElement.innerHTML = wave;
+
     for (const visualizerElement of visualizerElements) {
         visualizerElement.style.stroke = "#ffffff";
     }
@@ -296,4 +300,69 @@ function changeProgress(progressPercent) {
     }
 
     lastProgressPercentage = progressPercent;
+}
+
+
+
+async function getAudioBuffer(audioSource) {
+    const audioContext = new AudioContext();
+    const response = await fetch(audioSource);
+    const arrayBuffer = await response.arrayBuffer();
+    const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+
+    return audioBuffer;
+} 
+
+function filterAudioBuffer(audioBuffer) {
+    const rawData = audioBuffer.getChannelData(0); // We only need to work with one channel of data
+    const samples = 100; // Number of samples we want to have in our final data set
+    const blockSize = Math.floor(rawData.length / samples); // the number of samples in each subdivision
+    const filteredData = [];
+    for (let i = 0; i < samples; i++) {
+      let blockStart = blockSize * i; // the location of the first sample in the block
+      let sum = 0;
+      for (let j = 0; j < blockSize; j++) {
+        sum = sum + Math.abs(rawData[blockStart + j]) // find the sum of all the samples in the block
+      }
+      filteredData.push(sum / blockSize); // divide the sum by the block size to get the average
+    }
+
+    return filteredData;
+}
+
+function normalizeAudioBuffer(filteredData) {
+    const multiplier = Math.pow(Math.max(...filteredData), -1);
+
+    return filteredData.map(n => Math.round(n * multiplier * 100).toFixed(2) / 100);
+}
+
+function createAudioWaveSVG(audioBuffers) {
+    let waveVisualizerSVG = "";
+
+    for (let index = 1; index <= audioBuffers.length; ++index) {
+        const ellipse = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
+        ellipse.setAttributeNS(null, "rx", "1");
+        ellipse.setAttributeNS(null, "cy", "200");
+        ellipse.setAttributeNS(null, "stroke-width", "10");
+        ellipse.setAttributeNS(null, "stroke", "#ffffff");
+        ellipse.setAttributeNS(null, "id", `svg_${index.toString().padStart(3, "0")}`);
+        ellipse.setAttributeNS(null, "cx", index * 20 - 10);
+        ellipse.setAttributeNS(null, "ry", Math.floor(audioBuffers[index - 1] * 160) + 3);
+        waveVisualizerSVG += ellipse.outerHTML + "\n";
+    }
+    return waveVisualizerSVG;
+}
+
+async function getAudioWave(audioSorce) {
+    try {
+        const audioBuffer = await getAudioBuffer(audioSorce);
+        const filteredAudioBuffer = filterAudioBuffer(audioBuffer) ;
+        const normalizedAudioBuffer = normalizeAudioBuffer(filteredAudioBuffer);
+        const audioWaveSVG = createAudioWaveSVG(normalizedAudioBuffer);
+
+        return audioWaveSVG;
+    }
+    catch (error) {
+        console.log(error);
+    }
 }

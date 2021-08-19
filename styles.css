@@ -13,7 +13,7 @@
 body {
     margin: 0px;
     background-color: rgb(0, 104, 104);
-    background: linear-gradient(to right, #467063, #403653);
+    background: linear-gradient(to top, #467063, #403653);
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -144,6 +144,7 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
     display: none;
     color: #2e2e2e;
+    z-index: -1;
 }
 
 #previous {
@@ -185,7 +186,7 @@ h1, h2, h3, h4, h5, h6 {
 
 #progress-container {
     background-color: #3b3b3b;
-    border-radius: 4px;
+    border-radius: 2px;
     height: 64px;
     margin-bottom: 16px;
     margin-top: 2px;
@@ -205,7 +206,7 @@ h1, h2, h3, h4, h5, h6 {
     z-index: 1;
 }
 
-#visualizer {
+#visualizer-container {
     position: absolute;
     top: 50%;
     left: 50%;
